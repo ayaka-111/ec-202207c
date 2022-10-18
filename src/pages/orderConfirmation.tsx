@@ -3,6 +3,7 @@ import styleOrder from '../styles/orderForm.module.css';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+// import type { User } from 'types/types';
 
 //各フォームのデータ型cd
 // type FormData = {
@@ -18,7 +19,7 @@ export const fetcher = (resource: any, init: any) =>
 
 const orderConfirmation = () => {
   //クッキーの取得とキーを指定して値を取り出せるようにする
-  function getCookie(name: any) {
+  function getCookie(name: string) {
     if (typeof document !== 'undefined') {
       //documentが定義されている場合のみプログラムを実行
       let cookieData = document.cookie.split(';');
@@ -32,7 +33,7 @@ const orderConfirmation = () => {
     }
   }
   //前後の空白を取り除く
-  function trim(value: any) {
+  function trim(value: string) {
     return value.replace(/^¥s* |¥s*$/g, '');
   }
 
@@ -63,27 +64,27 @@ const orderConfirmation = () => {
 
   //名前、メールアドレス、郵便番号、住所、電話番号
   const [userName, setUserName] = useState('');
-  const onChangeName = (event: any) => {
+  const onChangeName = (event: {target:HTMLInputElement}) => {
     setUserName(event.target.value);
   };
 
   const [email, setEmail] = useState('');
-  const onChangeEmail = (event: any) => {
+  const onChangeEmail = (event: {target:HTMLInputElement}) => {
     setEmail(event.target.value);
   };
 
   const [zipCode, setZipCode] = useState('');
-  const onChangeZipCode = (event: any) => {
+  const onChangeZipCode = (event: {target:HTMLInputElement}) => {
     setZipCode(event.target.value);
   };
 
   const [address, setAddress] = useState('');
-  const onChangeAddress = (event: any) => {
+  const onChangeAddress = (event: {target:HTMLInputElement}) => {
     setAddress(event.target.value);
   };
 
   const [tel, setTel] = useState('');
-  const onChangeTel = (event: any) => {
+  const onChangeTel = (event: {target:HTMLInputElement}) => {
     setTel(event.target.value);
   };
 
@@ -93,19 +94,19 @@ const orderConfirmation = () => {
   const [payment, setPayment] = useState(1);
   const [status, setStatus] = useState(0);
 
-  const onChangePay = (event: any) => {
+  const onChangePay = (event: {target:HTMLInputElement}) => {
     setPayment(Number(event.target.value));
     setStatus(Number(event.target.value));
   };
 
   //配達時間(stateを日付と時間の2つに分けて送信する時はdeliveryTimeひとつにまとめる)
   const [deliveryTime, setDeliveryTime] = useState('');
-  const onChangeTime = (event: any) => {
+  const onChangeTime = (event: {target:HTMLInputElement}) => {
     setDeliveryTime(event.target.value);
   };
 
   const [deliveryDate, setDeliveryDate] = useState('');
-  const onChangeDate = (event: any) => {
+  const onChangeDate = (event: {target:HTMLInputElement}) => {
     setDeliveryDate(event.target.value);
   };
 
