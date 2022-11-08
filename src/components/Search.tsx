@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import styles from './search.module.css';
-import itemListStyles from './itemList.module.css';
 import useSWR from 'swr';
 import ItemList from './ItemList';
-import Link from 'next/link';
-import Image from 'next/image';
+import type { Item } from '../types/types';
+import Items from './Items';
 
 export const fetcher = (resource: any, init: any) =>
   fetch(resource, init).then((res) => res.json());
@@ -83,35 +82,21 @@ export default function Search() {
         {searchWord.length <= 0 ? (
           <ItemList />
         ) : (
-          searchData.map((item: any) => {
+          searchData.map((item: Item) => {
             return (
-              <div key={item.id} className={itemListStyles.item}>
-                <Link href={`/items/${item.id}`}>
-                  <a>
-                    <Image
-                      src={item.imagePath}
-                      alt="ピザ"
-                      width={200}
-                      height={125}
-                    />
-                    <div className={itemListStyles.itemText}>
-                      <p className={itemListStyles.itemName}>
-                        {item.name}
-                      </p>
-                      <br />
-                      <span className={itemListStyles.sizeM}>
-                        &nbsp;M&nbsp;
-                      </span>
-                      &nbsp;{item.priceM}円(税抜)
-                      <br />
-                      <span className={itemListStyles.sizeL}>
-                        &nbsp;L&nbsp;
-                      </span>
-                      &nbsp;{item.priceL}円(税抜)
-                    </div>
-                  </a>
-                </Link>
-              </div>
+              <>
+                <Items
+                  id={item.id}
+                  type={item.type}
+                  name={item.name}
+                  description={item.description}
+                  priceM={item.priceM}
+                  priceL={item.priceL}
+                  imagePath={item.imagePath}
+                  deleted={item.deleted}
+                  toppingList={item.toppingList}
+                />
+              </>
             );
           })
         )}

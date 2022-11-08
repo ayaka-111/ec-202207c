@@ -1,7 +1,7 @@
 import useSWR from 'swr';
-import Link from 'next/link';
-import Image from 'next/image';
 import styles from './itemList.module.css';
+import type { Item } from '../types/types';
+import Items from './Items';
 
 export const fetcher = (resource: any, init: any) =>
   fetch(resource, init).then((res) => res.json());
@@ -12,40 +12,26 @@ export default function ItemList() {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
-  const sortList = data.sort(function (a: any, b: any) {
+  const sortList = data.sort(function (a: Item, b: Item) {
     return a.priceM - b.priceM;
   });
 
   return (
     <div className={styles.itemList}>
-      {sortList.map((item: any) => {
+      {sortList.map((item: Item) => {
         return (
           <>
-            <div className={styles.item}>
-              <Link href={`/items/${item.id}`}>
-                <a>
-                  <Image
-                    src={item.imagePath}
-                    alt="ピザ"
-                    width={200}
-                    height={125}
-                  />
-                  <div className={styles.itemText}>
-                    <p className={styles.itemName}>{item.name}</p>
-                    <br />
-                    <span className={styles.sizeM}>
-                      &nbsp;M&nbsp;
-                    </span>
-                    &nbsp;{item.priceM.toLocaleString()}円(税抜)
-                    <br />
-                    <span className={styles.sizeL}>
-                      &nbsp;L&nbsp;
-                    </span>
-                    &nbsp;{item.priceL.toLocaleString()}円(税抜)
-                  </div>
-                </a>
-              </Link>
-            </div>
+            <Items
+              id={item.id}
+              type={item.type}
+              name={item.name}
+              description={item.description}
+              priceM={item.priceM}
+              priceL={item.priceL}
+              imagePath={item.imagePath}
+              deleted={item.deleted}
+              toppingList={item.toppingList}
+            />
           </>
         );
       })}
